@@ -1,0 +1,49 @@
+<html
+        xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+        xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+        xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+        data-namespace-typo3-fluid="true"
+>
+
+<f:layout name="Module"/>
+
+<f:section name="Content">
+    <h1>Content auditing</h1>
+    <f:if condition="{pageId}">
+        <f:then>
+
+            <f:asset.module identifier="@typo3/backend/modal.js"/>
+            <f:asset.module identifier="@typo3/backend/context-menu.js"/>
+
+            <h1>Audit</h1>
+
+            <div class="card-container">
+                <f:for each="{providers}" as="provider">
+                    <div class="card {f:if(condition:provider.severity,then:'card-{provider.severity.cssClass}')} card-size-small">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <f:if condition="{provider.iconIdentifier}">
+                                    <core:icon identifier="{provider.iconIdentifier}" size="medium"/>
+                                </f:if>
+                                {provider.title}
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                        </div>
+                        <div class="card-footer">
+                            <f:be.link class="btn btn-default" route="web_audit.show" parameters="{id:pageId,provider:provider.identifier}">Details</f:be.link>
+                        </div>
+                    </div>
+                </f:for>
+            </div>
+        </f:then>
+        <f:else>
+            <f:be.infobox title="Select a page">
+                <p>Please select a page for auditing!</p>
+            </f:be.infobox>
+        </f:else>
+    </f:if>
+
+</f:section>
+
+</html>

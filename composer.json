@@ -1,0 +1,27 @@
+{
+    "name": "georgringer/audit",
+    "type": "typo3-cms-extension",
+    "description": "Content audit ",
+    "authors": [
+        {
+            "name": "Georg Ringer",
+            "role": "Developer"
+        }
+    ],
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "symfony/dom-crawler": "^7",
+        "symfony/css-selector": "^7",
+        "typo3/cms-core": "^13"
+    },
+    "autoload": {
+        "psr-4": {
+            "GeorgRinger\\Audit\\": "Classes"
+        }
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "audit"
+        }
+    }
+}

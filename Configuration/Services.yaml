@@ -1,0 +1,12 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  GeorgRinger\Audit\:
+    resource: '../Classes/*'
+
+  GeorgRinger\Audit\Registry\AuditRegistry:
+    arguments:
+      - !tagged_iterator audit.audit
