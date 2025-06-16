@@ -3,11 +3,9 @@
 namespace GeorgRinger\Audit\Audit\Seo;
 
 use GeorgRinger\Audit\Audit\AbstractAudit;
-use GeorgRinger\Audit\Audit\ReportInterface;
 use Symfony\Component\DomCrawler\Crawler;
-use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 
-class MetaFields extends AbstractAudit implements ReportInterface
+class MetaFields extends AbstractAudit
 {
 
     public function init(): void

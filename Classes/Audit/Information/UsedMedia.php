@@ -3,11 +3,8 @@
 namespace GeorgRinger\Audit\Audit\Information;
 
 use GeorgRinger\Audit\Audit\AbstractAudit;
-use GeorgRinger\Audit\Audit\ReportInterface;
-use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
-class UsedMedia extends AbstractAudit implements ReportInterface
+class UsedMedia extends AbstractAudit
 {
 
     public function init(): void

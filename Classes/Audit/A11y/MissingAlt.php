@@ -3,11 +3,10 @@
 namespace GeorgRinger\Audit\Audit\A11y;
 
 use GeorgRinger\Audit\Audit\AbstractAudit;
-use GeorgRinger\Audit\Audit\ReportInterface;
 use Symfony\Component\DomCrawler\Crawler;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 
-class MissingAlt extends AbstractAudit implements ReportInterface
+class MissingAlt extends AbstractAudit
 {
 
     public function init(): void
@@ -21,6 +20,9 @@ class MissingAlt extends AbstractAudit implements ReportInterface
         }
 
         $this->report = implode('<br>', $list);
+        if (!empty($list)) {
+            $this->severity = ContextualFeedbackSeverity::WARNING;;
+        }
     }
 
     public function getIdentifier(): string
