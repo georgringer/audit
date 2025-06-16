@@ -41,9 +41,7 @@ final readonly class DataCollectResponseHeader implements MiddlewareInterface
             ];
         }
 
-
         $response = $response->withHeader('X-Used-Media', json_encode($imagesOnPage));
-
 
         return $response;
     }

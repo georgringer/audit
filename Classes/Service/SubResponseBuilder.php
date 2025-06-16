@@ -24,7 +24,6 @@ class SubResponseBuilder {
     protected ResponseFactoryInterface $responseFactory;
     protected LinkService $link;
     protected RequestFactoryInterface $requestFactory;
-    protected GuzzleClientFactory $guzzleClientFactory;
 
     public function __construct(
         protected readonly SiteFinder $siteFinder,
@@ -36,42 +35,19 @@ class SubResponseBuilder {
         $this->responseFactory = $container->get(ResponseFactoryInterface::class);
         $this->link = $container->get(LinkService::class);
         $this->requestFactory = $container->get(RequestFactoryInterface::class);
-
     }
-
 
     public function getFeRequest(int $pageId, $request): SubResponse
     {
-//        $resolvedUrl = $this->resolveUrl($request, $urlParams);
-
-
-        // Build Url
         $resolvedUrl = $this->siteFinder->getSiteByPageId($pageId)->getRouter()->generateUri(
             $pageId,
             ['_language' => 0]
         );
 
-        /**
-         *
-         * $builder = GeneralUtility::makeInstance(FrontendRequestBuilder::class );
-         * $response = $builder->buildRequestForPage($resolvedUrl, null, null);
-         *
-         *
-         * $body = $response->getBody();
-         * $body->rewind();
-         * $content = $response->getBody()->getContents();
-         *
-         * $subResponseData = new SubResponse($content, $response->getHeaders());
-         * return $subResponseData;
-         */
-
-        // Create a sub-request and do not take any special query parameters into account
-        $newR = $request;
-
         $pageArguments = new PageArguments($pageId, '0', []);
 
 
-        $subRequest = $newR->withQueryParams([])->withUri($resolvedUrl)->withMethod('GET');
+        $subRequest = $request->withQueryParams([])->withUri($resolvedUrl)->withMethod('GET');
         $subRequest = $subRequest->withAttribute('applicationType', SystemEnvironmentBuilder::REQUESTTYPE_FE);
         $subRequest = $subRequest->withAttribute('site', $this->siteFinder->getSiteByPageId($pageId));
         $subRequest = $subRequest->withAttribute('language', $this->siteFinder->getSiteByPageId($pageId)->getDefaultLanguage());
@@ -90,8 +66,7 @@ class SubResponseBuilder {
         $body->rewind();
         $content = $subResponse->getBody()->getContents();
 
-        $subResponseData = new SubResponse($content, $subResponse->getHeaders());
-        return $subResponseData;
+        return new SubResponse($content, $subResponse->getHeaders());
     }
 
     /**
@@ -112,7 +87,6 @@ class SubResponseBuilder {
 
         return $this->application->handle($request);
     }
-
 
     /**
      * Stash and restore portions of the global environment around a subrequest callable.
