@@ -29,11 +29,7 @@ class ModuleController
         protected readonly EventDispatcherInterface $eventDispatcher,
         protected readonly AuditRegistry $auditRegistry,
         private readonly SubResponseBuilder $subResponseBuilder,
-    )
-    {
-
-
-    }
+    ) {}
 
     public function overviewAction(ServerRequestInterface $request): ResponseInterface
     {
@@ -42,7 +38,6 @@ class ModuleController
 
         if ($pageId > 0) {
             $content = $this->subResponseBuilder->getFeRequest($pageId, $request);
-//DebuggerUtility::var_dump(array_keys($GLOBALS));
 
 //        $this->configureOverViewDocHeader($view, $request->getAttribute('normalizedParams')->getRequestUri());
 //        $view->setTitle(
@@ -59,13 +54,8 @@ class ModuleController
             $view->assignMultiple([
                 'providers' => $providers,
                 'pageId' => $pageId,
-//            'unassignedSites' => $unassignedSites,
-//            'duplicatedRootPages' => $duplicatedRootPages,
-//            'duplicatedEntryPoints' => $this->getDuplicatedEntryPoints($allSites, $pages),
-//            'invalidSets' => $this->setRegistry->getInvalidSets(),
             ]);
         }
-
 
         return $view->renderResponse('Audit/Overview');
     }
